@@ -14,6 +14,19 @@
 #   about_triangle_project_2.rb
 #
 def triangle(a, b, c)
+  # should error if any side is 0
+  if a == 0 || b == 0 || c == 0
+    raise TriangleError, "Sides cannot be 0"
+  end
+  # should error if any side is negative
+  if a < 0 || b < 0 || c < 0
+    raise TriangleError, "Sides cannot be negative"
+  end
+  # should error if the sum of the lengths of any two sides is less than or equal to the length of the third side
+  if (a + b) <= c || (b + c) <= a || (a + c) <= b
+    raise TriangleError, "The sum of the lengths of any two sides must be greater than the length of the third side"
+  end
+
   # equilateral: all sides are equal
   if a == b && b == c
     return :equilateral
@@ -26,7 +39,6 @@ def triangle(a, b, c)
   if a != b && b != c && a != c
     return :scalene
   end
-
 end
 
 # Error class used in part 2.  No need to change this code.
