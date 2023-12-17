@@ -85,7 +85,7 @@ class AboutIteration < Neo::Koan
     assert_equal 9, result
 
     result2 = [2, 3, 4].inject(1) { |product, item| product * item }
-    assert_equal 10, result2
+    assert_equal 24, result2
 
     # Extra Credit:
     # Describe in your own words what inject does.
