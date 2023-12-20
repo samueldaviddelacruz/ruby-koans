@@ -29,8 +29,52 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 #
 # Your goal is to write the score method.
 
-def score(dice)
+def score(dice=[])
   # You need to write this method
+  if dice.empty?
+    return 0
+  end
+  score = 0
+  if dice.count < 3
+    dice.each do |x|
+      if x == 1
+        score += 100
+      elsif x == 5
+        score += 50
+      end
+    end
+   return score
+  end  
+  first_3 = dice[0..2]
+  first_3_are_one = first_3.all? {|x| x == 1}
+  first_3_are_same = first_3.all? {|x| x == first_3[0]}
+  counts_map = Hash.new(0)
+  counts_map[1] = dice.count(1)
+  counts_map[2] = dice.count(2)
+  counts_map[3] = dice.count(3)
+  counts_map[4] = dice.count(4)
+  counts_map[5] = dice.count(5)
+  counts_map[6] = dice.count(6)
+  if first_3_are_one
+    score += 1000
+    counts_map[1] -= 3
+  elsif first_3_are_same
+    score += first_3[0] * 100
+    counts_map[first_3[0]] -= 3
+  end
+
+  counts_map.each do |key, value| 
+    if value >= 3
+      score += key * 100
+      counts_map[key] -= 3
+    end
+    if key == 1
+      score += value * 100
+    elsif key == 5
+      score += value * 50
+    end
+  end
+  return score
 end
 
 class AboutScoringProject < Neo::Koan
